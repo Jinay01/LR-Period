@@ -8,3 +8,6 @@ class College(models.Model):
 
     def __str__(self):
         return self.name
+
+# class Stream(models.Model):
+#     stream = models.ForeignKey(College, max_length=200, null=True)
