@@ -44,8 +44,23 @@ def loginPage(request):
 
 @login_required(login_url='loginpage')
 def homePage(request):
-    context = {}
+    college = College.objects.all()
+    context = {'college': college}
     return render(request, 'college/home.html', context)
+
+
+@login_required(login_url='loginpage')
+def college_settings(request, pk):
+    colleges = College.objects.get(id=pk)
+    college = colleges.name
+    user = request.user.username
+    stream = colleges.stream.all()
+    print(stream)
+    # .name and .username will convert it to string
+    # print(type(college))
+    # print(type(user))
+    context = {'college': college, 'user': user, 'stream': stream}
+    return render(request, 'college/college_settings.html', context)
 
 
 def logoutUser(request):

@@ -12,9 +12,26 @@
 <body>
     {% include 'college/navbar.html' %}
 
-    {% block content %}
-
-    {% endblock %}
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID </th>
+                <th scope="col">COLLEGE</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in college %}
+            <tr>
+                <th scope="row">{{i.id}}</th>
+                <td><a class="btn btn-sm btn-info" style='width:200px;'
+                        href='{% url "college_settings" i.id %}'>{{i}}</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 </body>
 

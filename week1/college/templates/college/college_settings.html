@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Settings</title>
+</head>
+
+<body>
+    {% include 'college/navbar.html' %}
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">{{college}}</h1>
+            <p class="lead">This page has all details about {{college}} </p>
+        </div>
+    </div>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">STREAM</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in stream %}
+            <tr>
+                <th scope="row">{{i}}</th>
+                {% if user == college %}
+                <th><a class="btn btn-sm btn-info" style='width:200px;'>UPDATE</a>
+                </th>
+                <th><a class="btn btn-sm btn-danger" style='width:200px;'>DELETE</a>
+                </th>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+</body>
+
+</html>
