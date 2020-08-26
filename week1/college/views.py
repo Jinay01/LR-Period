@@ -55,12 +55,24 @@ def college_settings(request, pk):
     college = colleges.name
     user = request.user.username
     stream = colleges.stream.all()
-    print(stream)
+    college_id = pk
     # .name and .username will convert it to string
     # print(type(college))
     # print(type(user))
-    context = {'college': college, 'user': user, 'stream': stream}
+    context = {'college': college, 'user': user,
+               'stream': stream, "college_id": college_id}
     return render(request, 'college/college_settings.html', context)
+
+
+def stream_delete(request, pk, pk1):
+    college = College.objects.get(id=pk)
+    streams = college.stream.get(stream=pk1)
+    # print(streams)
+    if request.method == "POST":
+        college.stream.remove(streams)
+        return redirect('homePage')
+    context = {}
+    return render(request, 'college/stream_delete.html', context)
 
 
 def logoutUser(request):
