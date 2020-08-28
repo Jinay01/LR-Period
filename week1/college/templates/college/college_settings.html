@@ -19,8 +19,10 @@
         <thead class="thead-dark">
             <tr>
                 <th scope="col">STREAM</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
+                {% if user == college %}
+                <th scope="col"><a class="btn btn-sm btn-info" style='width:200px;'
+                        href="{% url 'update_stream' college_id %}">UPDATE</a></th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -28,8 +30,6 @@
             <tr>
                 <th scope="row">{{i}}</th>
                 {% if user == college %}
-                <th><a class="btn btn-sm btn-info" style='width:200px;'>UPDATE</a>
-                </th>
                 <th><a class="btn btn-sm btn-danger" style='width:200px;'
                         href='{% url "stream_delete" college_id i %}'>DELETE</a>
                 </th>

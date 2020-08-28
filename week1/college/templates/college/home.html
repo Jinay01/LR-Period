@@ -28,6 +28,11 @@
                 <td><a class="btn btn-sm btn-info" style='width:200px;'
                         href='{% url "college_settings" i.id %}'>{{i}}</a>
                 </td>
+                {% if request.user.username == i.name %}
+                <td><a class="btn btn-sm btn-danger" style='width:200px;'
+                        href='{% url "delete_college" i.id %}'>Delete</a>
+                </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>

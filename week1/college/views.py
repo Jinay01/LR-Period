@@ -71,8 +71,32 @@ def stream_delete(request, pk, pk1):
     if request.method == "POST":
         college.stream.remove(streams)
         return redirect('homePage')
-    context = {}
+    context = {'streams': streams}
     return render(request, 'college/stream_delete.html', context)
+
+
+def update_stream(request, pk):
+    college = College.objects.get(id=pk)
+    form = UpdateStream(instance=college)
+    if request.method == "POST":
+        form = UpdateStream(request.POST, instance=college)
+        if form.is_valid:
+            form.save()
+            return redirect('homePage')
+
+    context = {'form': form, 'college': college}
+
+    return render(request, 'college/update_stream.html', context)
+
+
+def delete_college(request, pk):
+    college = College.objects.get(id=pk)
+    context = {'college': college}
+    if request.method == 'POST':
+        request.user.delete()
+        college.delete()
+        return redirect('homePage')
+    return render(request, 'college/delete_college.html', context)
 
 
 def logoutUser(request):

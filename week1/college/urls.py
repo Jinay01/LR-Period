@@ -9,5 +9,7 @@ urlpatterns = [
     path('college_settings/<str:pk>',
          views.college_settings, name='college_settings'),
     path('stream_delete/<str:pk>/<str:pk1>',
-         views.stream_delete, name='stream_delete')
+         views.stream_delete, name='stream_delete'),
+    path('update_stream/<str:pk>', views.update_stream, name='update_stream'),
+    path('delete_college/<str:pk>', views.delete_college, name='delete_college'),
 ]

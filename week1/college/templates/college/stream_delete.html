@@ -1,20 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'college/navbar.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+{% block content %}
 
-<body>
-    <h1>Delete Page</h1>
-    <form method="POST" action=''>
-        {% csrf_token %}
-        <!-- {{formset.management_form}} -->
-        <h1>Are you sure you want to remove {{stream}}</h1>
-        <input name='submit' type="submit">
-    </form>
-</body>
 
-</html>
+<form method="POST" action=''>
+    {% csrf_token %}
+    <!-- {{formset.management_form}} -->
+    <h1>Are you sure you want to remove {{streams}}</h1>
+    <a class="btn btn-info" href="{% url 'homePage' %}">Cancel</a>
+    <input class="btn btn-danger" name='submit' type="submit">
+</form>
+
+{% endblock %}
