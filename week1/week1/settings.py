@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'college',
+    'absuser',
 ]
+
+AUTH_USER_MODEL = 'absuser.Collegeuser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
