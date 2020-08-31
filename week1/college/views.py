@@ -59,8 +59,12 @@ def college_settings(request, pk):
     # .name and .username will convert it to string
     # print(type(college))
     # print(type(user))
+
+    # getting students list
+    students = Student.objects.filter(college=college_id)
+
     context = {'college': college, 'user': user,
-               'stream': stream, "college_id": college_id}
+               'stream': stream, "college_id": college_id, 'students': students}
     return render(request, 'college/college_settings.html', context)
 
 
@@ -87,6 +91,11 @@ def update_stream(request, pk):
     context = {'form': form, 'college': college}
 
     return render(request, 'college/update_stream.html', context)
+
+
+def update_student(request, pk):
+    context = {}
+    return render(request, 'college/update_student.html', context)
 
 
 def delete_college(request, pk):
