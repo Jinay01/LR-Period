@@ -14,10 +14,16 @@ from absuser.models import *
 class UpdateStream(ModelForm):
     class Meta():
         model = College
-        fields = ['stream']
+        fields = ['stream_name']
 
 
 class NewUser(UserCreationForm):
     class Meta():
         model = Collegeuser
         fields = ['email', 'username', 'password1', 'password2']
+
+
+class UpdateStudent(ModelForm):
+    class Meta():
+        model = Student
+        fields = ['name', 'stream_name']

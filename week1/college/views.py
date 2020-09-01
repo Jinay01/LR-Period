@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .decoraters import unauthenticated_user
 from django.contrib.auth.decorators import login_required
+from django.forms import inlineformset_factory
 
 # Create your views here.
 
@@ -18,7 +19,7 @@ def regis(request):
             form.save()
             college = form.cleaned_data.get('username')
             College.objects.create(
-                name=college
+                college_name=college
             )
             return redirect('loginpage')
 
@@ -52,16 +53,16 @@ def homePage(request):
 @login_required(login_url='loginpage')
 def college_settings(request, pk):
     colleges = College.objects.get(id=pk)
-    college = colleges.name
+    college = colleges.college_name
     user = request.user.username
-    stream = colleges.stream.all()
+    stream = colleges.stream_name.all()
     college_id = pk
     # .name and .username will convert it to string
     # print(type(college))
     # print(type(user))
 
     # getting students list
-    students = Student.objects.filter(college=college_id)
+    students = Student.objects.filter(college_name=college_id)
 
     context = {'college': college, 'user': user,
                'stream': stream, "college_id": college_id, 'students': students}
@@ -70,10 +71,11 @@ def college_settings(request, pk):
 
 def stream_delete(request, pk, pk1):
     college = College.objects.get(id=pk)
-    streams = college.stream.get(stream=pk1)
+    streams = college.stream_name.get(stream_name=pk1)
     # print(streams)
     if request.method == "POST":
-        college.stream.remove(streams)
+        # check this once
+        college.stream_name.remove(streams)
         return redirect('homePage')
     context = {'streams': streams}
     return render(request, 'college/stream_delete.html', context)
@@ -93,9 +95,47 @@ def update_stream(request, pk):
     return render(request, 'college/update_stream.html', context)
 
 
-def update_student(request, pk):
-    context = {}
-    return render(request, 'college/update_student.html', context)
+def stream_settings(request, pk):
+    colleges = College.objects.get(id=pk)
+    college = colleges.college_name
+    user = request.user.username
+    stream = colleges.stream_name.all()
+    college_id = pk
+    context = {'college': college, 'user': user,
+               'stream': stream, "college_id": college_id}
+    return render(request, 'college/stream_settings.html', context)
+
+
+def student_settings(request, pk):
+    colleges = College.objects.get(id=pk)
+    college = colleges.college_name
+    stream_lis = []
+    streams = colleges.stream_name.all()
+    for stream in streams:
+        stream_lis.append(stream)
+    user = request.user.username
+    students = Student.objects.filter(college_name=pk)
+    college_id = pk
+    context = {'students': students, 'college': college,
+               'user': user, 'college_id': college_id, 'stream_lis': stream_lis}
+    return render(request, 'college/student_settings.html', context)
+
+
+def add_student(request, pk):
+    StudentFormSet = inlineformset_factory(
+        College, Student, fields=('name', 'stream_name', 'college_name'), extra=10)
+    colleges = College.objects.get(id=pk)
+    print(colleges)
+    formset = StudentFormSet(
+        queryset=Student.objects.none(), instance=colleges)
+    if request.method == 'POST':
+        formset = StudentFormSet(request.POST, instance=colleges)
+        # if paranthesis missing then error = studentform doesnot have the attribute cleaned_data
+        if formset.is_valid():
+            formset.save()
+            return redirect('homePage')
+    context = {'formset': formset}
+    return render(request, 'college/add_student.html', context)
 
 
 def delete_college(request, pk):

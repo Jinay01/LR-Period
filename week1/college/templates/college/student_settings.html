@@ -1,0 +1,32 @@
+{% extends 'college/navbar.html' %}
+
+{% block content %}
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">STUDENTS</th>
+            <th scope="col">STREAM</th>
+            {% if user == college %}
+            <th scope="col"><a class="btn btn-sm btn-info" style='width:200px;'
+                    href="{% url 'add_student' college_id %}">ADD STUDENT</a></th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in students %}
+        {% if i.stream_name in stream_lis %}
+        <tr>
+            <th scope="row">{{i}}</th>
+            <th scope="row">{{i.stream_name}}</th>
+            <!-- {% if user == college %} -->
+            <!-- <th><a class="btn btn-sm btn-danger" style='width:200px;'>DELETE</a> -->
+            <!-- </th> -->
+            <!-- {% endif %} -->
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

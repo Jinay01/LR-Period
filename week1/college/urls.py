@@ -12,5 +12,8 @@ urlpatterns = [
          views.stream_delete, name='stream_delete'),
     path('update_stream/<str:pk>', views.update_stream, name='update_stream'),
     path('delete_college/<str:pk>', views.delete_college, name='delete_college'),
-    path('update_student/<str:pk>', views.update_student, name='update_student'),
+    path('add_student/<str:pk>', views.add_student, name='add_student'),
+    path('stream_settings/<str:pk>', views.stream_settings, name='stream_settings'),
+    path('student_settings/<str:pk>',
+         views.student_settings, name='student_settings'),
 ]

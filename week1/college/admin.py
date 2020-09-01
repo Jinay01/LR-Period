@@ -9,7 +9,7 @@ admin.site.register(Stream)
 
 
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'college', 'stream')
+    list_display = ('name', 'college_name', 'stream_name')
 
 
 admin.site.register(Student, StudentAdmin)

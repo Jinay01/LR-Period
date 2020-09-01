@@ -13,56 +13,14 @@
         <div class="container">
             <h1 class="display-4">{{college}}</h1>
             <p class="lead">This page has all details about {{college}} </p>
+            <p><a class="btn btn-sm btn-info" style='width:200px;'
+                    href="{% url 'stream_settings' college_id %}">STREAMS</a>
+                <a class="btn btn-sm btn-danger" style='width:200px;'
+                    href="{% url 'student_settings' college_id %}">STUDENTS</a></p>
+
         </div>
     </div>
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">STREAM</th>
-                {% if user == college %}
-                <th scope="col"><a class="btn btn-sm btn-info" style='width:200px;'
-                        href="{% url 'update_stream' college_id %}">UPDATE</a></th>
-                {% endif %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for i in stream %}
-            <tr>
-                <th scope="row">{{i}}</th>
-                {% if user == college %}
-                <th><a class="btn btn-sm btn-danger" style='width:200px;'
-                        href='{% url "stream_delete" college_id i %}'>DELETE</a>
-                </th>
-                {% endif %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">STUDENTS</th>
-                <th scope="col">STREAM</th>
-                {% if user == college %}
-                <!-- <th scope="col"><a class="btn btn-sm btn-info" style='width:200px;'
-                        href="{% url 'update_student' college_id %}">UPDATE</a></th> -->
-                {% endif %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for i in students %}
-            <tr>
-                <th scope="row">{{i}}</th>
-                <th scope="row">{{i.stream}}</th>
-                {% if user == college %}
-                <!-- <th><a class="btn btn-sm btn-danger" style='width:200px;'>DELETE</a> -->
-                <!-- </th> -->
-                {% endif %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 
 
 </body>

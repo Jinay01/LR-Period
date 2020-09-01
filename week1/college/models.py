@@ -4,24 +4,26 @@ from django.db import models
 
 
 class Stream(models.Model):
-    stream = models.CharField(max_length=200, null=True, default='STREAM')
+    stream_name = models.CharField(max_length=200, null=True, default='STREAM')
 
     def __str__(self):
-        return self.stream
+        return self.stream_name
 
 
 class College(models.Model):
-    name = models.CharField(max_length=200, null=True, default='hiii')
-    stream = models.ManyToManyField(Stream)
+    college_name = models.CharField(max_length=200, null=True, default='hiii')
+    stream_name = models.ManyToManyField(Stream)
 
     def __str__(self):
-        return self.name
+        return self.college_name
 
 
 class Student(models.Model):
     name = models.CharField(max_length=200, null=True)
-    college = models.ForeignKey(College, null=True, on_delete=models.SET_NULL)
-    stream = models.ForeignKey(Stream, null=True, on_delete=models.SET_NULL)
+    college_name = models.ForeignKey(
+        College, null=True, on_delete=models.CASCADE)
+    stream_name = models.ForeignKey(
+        Stream, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.name
