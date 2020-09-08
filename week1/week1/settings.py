@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'college',
     'absuser',
+    'rest_framework',
 ]
 
 AUTH_USER_MODEL = 'absuser.Collegeuser'
