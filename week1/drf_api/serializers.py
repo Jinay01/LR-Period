@@ -15,3 +15,27 @@ class CollegeSerializer(serializers.ModelSerializer):
     class Meta():
         model = College
         fields = ['id', 'college_name', 'stream_name']
+
+
+# if we want stream in college then we need to first add streams serializer
+
+# stream method 2
+class StreamSerializer2(serializers.HyperlinkedModelSerializer):
+    class Meta():
+        model = Stream
+        fields = '__all__'
+
+# student
+
+
+class StudentSerializer2(serializers.HyperlinkedModelSerializer):
+    class Meta():
+        model = Student
+        fields = '__all__'
+
+
+# college method 2
+class CollegeSerializer2(serializers.HyperlinkedModelSerializer):
+    class Meta():
+        model = College
+        fields = '__all__'
