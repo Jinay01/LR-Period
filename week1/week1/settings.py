@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'absuser',
     'rest_framework',
     'drf_api',
+    'import_export',
 ]
 
 AUTH_USER_MODEL = 'absuser.Collegeuser'

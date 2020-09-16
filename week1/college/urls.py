@@ -16,4 +16,8 @@ urlpatterns = [
     path('stream_settings/<str:pk>', views.stream_settings, name='stream_settings'),
     path('student_settings/<str:pk>',
          views.student_settings, name='student_settings'),
+
+    # committee
+    path('committee/<str:pk>', views.committee, name='committee'),
+    path('committee_add/<str:pk>', views.committee_add, name='committee_add'),
 ]

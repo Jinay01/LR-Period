@@ -125,7 +125,7 @@ def add_student(request, pk):
     StudentFormSet = inlineformset_factory(
         College, Student, fields=('name', 'stream_name', 'college_name'), extra=10)
     colleges = College.objects.get(id=pk)
-    print(colleges)
+    # print(colleges)
     formset = StudentFormSet(
         queryset=Student.objects.none(), instance=colleges)
     if request.method == 'POST':
@@ -136,6 +136,33 @@ def add_student(request, pk):
             return redirect('homePage')
     context = {'formset': formset}
     return render(request, 'college/add_student.html', context)
+
+
+def committee(request, pk):
+    college = College.objects.get(id=pk)
+    college = college.college_name
+    user = request.user.username
+    college_id = pk
+    committee = Committee.objects.filter(college_name=pk)
+    context = {'committee': committee, 'college_id': college_id,
+               'user': user, 'college': college}
+    return render(request, 'college/committee.html', context)
+
+
+def committee_add(request, pk):
+    # again using inline formsets
+    CommitteeFormSet = inlineformset_factory(
+        College, Committee, fields=('committee_name',), extra=1)
+    colleges = College.objects.get(id=pk)
+    formset = CommitteeFormSet(
+        queryset=Committee.objects.all(), instance=colleges)
+    if request.method == 'POST':
+        formset = CommitteeFormSet(request.POST, instance=colleges)
+        if formset.is_valid():
+            formset.save()
+            return redirect('homePage')
+    context = {'formset': formset}
+    return render(request, 'college/committee_add.html', context)
 
 
 def delete_college(request, pk):

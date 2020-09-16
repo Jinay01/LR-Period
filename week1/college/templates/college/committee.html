@@ -1,0 +1,26 @@
+{% include 'college/navbar.html' %}
+
+{% block content %}
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">COMMITTEE</th>
+            {% if user == college %}
+            <th scope="col"><a class="btn btn-sm btn-info" style='width:200px;'
+                    href="{% url 'committee_add' college_id %}">ADD COMMITTEE</a></th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in committee %}
+        <tr>
+            <th scope="row">{{i}}</th>
+            <th scope="row">E</th>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}

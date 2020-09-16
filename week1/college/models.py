@@ -27,3 +27,12 @@ class Student(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Committee(models.Model):
+    committee_name = models.CharField(max_length=200, null=True, blank=False)
+    college_name = models.ForeignKey(
+        College, null=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.committee_name
