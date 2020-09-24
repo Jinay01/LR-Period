@@ -9,6 +9,9 @@ router.register(r'college', views.CollegeViewSet)
 
 
 urlpatterns = [
+    # Registration urls
+    path('regis', views.registration_view, name='regis'),
+
     # college section
     path('colleges', views.colleges, name='colleges'),
     path('college-details/<str:pk>', views.collegeDetails, name="college-details"),

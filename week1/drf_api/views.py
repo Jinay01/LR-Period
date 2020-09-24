@@ -4,11 +4,31 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import *
 from rest_framework import viewsets
-
+from rest_framework import status
 
 # Create your views here.
 
+# User registration using drf
+
+
+@api_view(['POST'])
+def registration_view(request):
+    serializer = CollegeuserSerializer()
+    if request.method == "POST":
+        serializer = CollegeuserSerializer(data=request.data)
+        data = {}
+        if serializer.is_valid():
+            collegeuser = serializer.save()
+            data['response'] = 'User is successfully created'
+            data['email'] = collegeuser.email
+            data['username'] = collegeuser.username
+        else:
+            data = serializer.error
+        return Response(data)
+
 # COLLEGE
+
+
 @api_view(['GET'])
 def colleges(request):
     college = College.objects.all()
