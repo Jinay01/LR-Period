@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from .serializers import *
 from rest_framework import viewsets
 from rest_framework import status
+from rest_framework.views import APIView
 
 # Create your views here.
 
@@ -26,7 +27,7 @@ def registration_view(request):
             data = serializer.error
         return Response(data)
 
-# COLLEGE
+# COLLEGE function bsed views
 
 
 @api_view(['GET'])
@@ -60,6 +61,48 @@ def collegeUpdate(request, pk):
     if college_update.is_valid():
         college_update.save()
     return Response(college_update.data)
+
+# College classed based api views
+
+
+class collegeApiView(APIView):
+    def get(self, request):
+        college = College.objects.all()
+        college = CollegeSerializer(college, many=True)
+        return Response(college.data)
+
+    def post(self, request):
+        serializer_data = CollegeSerializer(data=request.data)
+        if serializer_data.is_valid():
+            serializer_data.save()
+            return Response(serializer_data.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class College1(APIView):
+
+    def get_obj(self, pk):
+        try:
+            return College.objects.get(id=pk)
+        except College.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def get(self, request, pk):
+        college = self.get_obj(pk)
+        serializer = CollegeSerializer(college)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, pk):
+        college = self.get_obj(pk)
+        serializer = CollegeSerializer(college, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def delete(self, request, pk):
+        college = self.get_obj(pk)
+        college.delete()
+        return Response('College deleted')
 
 
 # STREAM

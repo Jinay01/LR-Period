@@ -19,6 +19,10 @@ urlpatterns = [
     path('college-stream-delete/<str:pk>/<str:pk2>', views.collegeStreamDelete,
          name='college-stream-delete'),
 
+    # using class based api view
+    path('college', views.collegeApiView.as_view(), name='college'),
+    path('college1/<str:pk>', views.College1.as_view(), name='college1'),
+
     # college and stream method 2
     path('', include(router.urls)),
 

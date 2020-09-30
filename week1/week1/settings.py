@@ -46,6 +46,14 @@ INSTALLED_APPS = [
     'import_export',
 ]
 
+# This class relies on Django's permissions system to allow users to create, update,
+# or delete objects, while providing read-only access for anonymous users
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+#     ]
+# }
+
 AUTH_USER_MODEL = 'absuser.Collegeuser'
 
 MIDDLEWARE = [
