@@ -44,7 +44,15 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_api',
     'import_export',
+    'rest_framework.authtoken',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
 
 # This class relies on Django's permissions system to allow users to create, update,
 # or delete objects, while providing read-only access for anonymous users

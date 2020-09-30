@@ -7,6 +7,8 @@ from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework import generics, mixins
+from rest_framework.authentication import BasicAuthentication, SessionAuthentication, TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
@@ -67,6 +69,9 @@ def collegeUpdate(request, pk):
 
 
 class collegeApiView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         college = College.objects.all()
         college = CollegeSerializer(college, many=True)
@@ -143,6 +148,8 @@ def streamDelete(request, pk):
 class StreamGeneric(generics.GenericAPIView,  mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
     serializer_class = StreamSerializer
     queryset = Stream.objects.all()
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
     lookup_field = 'id'
 
