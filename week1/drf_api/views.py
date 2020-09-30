@@ -6,6 +6,7 @@ from .serializers import *
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework import generics, mixins
 
 # Create your views here.
 
@@ -105,7 +106,7 @@ class College1(APIView):
         return Response('College deleted')
 
 
-# STREAM
+# STREAM using function based views
 @api_view(['GET'])
 def streams(request):
     streams = Stream.objects.all()
@@ -137,8 +138,38 @@ def streamDelete(request, pk):
     return Response('Stream deleted')
 
 
+# STREAM using generic api view
+# For every function there is a mixin
+class StreamGeneric(generics.GenericAPIView,  mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
+    serializer_class = StreamSerializer
+    queryset = Stream.objects.all()
+
+    lookup_field = 'id'
+
+    def get(self, request, id=None):
+        if id:
+            return self.retrieve(request)
+        else:
+            return self.list(request)
+
+    def post(self, request, id=None):
+        return self.create(request)
+
+    def put(self, request, id=None):
+        return self.update(request, id)
+
+    def delete(self, request, id=None):
+        return self.destroy(request, id)
+
+    # what does update do in generic views
+
+    # def update(self, request, *args, **kwargs):
+    #     return super().update(request, *args, **kwargs)
+
 # METHOD 2 USING CLASS BASED VIEWS + HYPERLINK.....
 # for students
+
+
 class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer2

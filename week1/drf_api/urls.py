@@ -27,9 +27,15 @@ urlpatterns = [
     path('', include(router.urls)),
 
 
-    # stream section
+    # stream section using function based views
     path('streams', views.streams, name='streams'),
     path('stream-add', views.streamNew, name='stream-add'),
     path('stream-update/<str:pk>', views.streamUpdate, name='stream-update'),
     path('stream-delete/<str:pk>', views.streamDelete, name='stream-delete'),
+
+    # stream using generic views
+    path('stream-generic/',
+         views.StreamGeneric.as_view(), name='stream-generic'),
+    path('stream-generic/<str:id>',
+         views.StreamGeneric.as_view(), name='stream-generic'),
 ]
